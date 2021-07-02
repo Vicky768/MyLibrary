@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/library/user")
 public class UserController {
@@ -17,9 +19,11 @@ public class UserController {
     UserRepository userRepo;
 
     @GetMapping("/{userId}")
-    public Integer getUserDetailsFromId(@PathVariable Integer userId){
-           // User user = userRepo.getById(userId);
-            return userId;
+    public User getUserDetailsFromId(@PathVariable Integer userId){
+           Optional<User> user = userRepo.findById(userId);
+           if(user.isPresent())
+               return user.get();
+           return null;
     }
 
 
