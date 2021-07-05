@@ -1,5 +1,6 @@
 package com.library.sroy.LibraryProject.controller;
 
+import com.library.sroy.LibraryProject.exception.BookNotFoundException;
 import com.library.sroy.LibraryProject.model.Book;
 import com.library.sroy.LibraryProject.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,28 @@ public class BookController {
     public Book getBookDetailsById(@PathVariable Integer bookId)
     {
         Optional<Book> book = bookRepo.findById(bookId);
-        if(book.isPresent())
-            return book.get();
+        if(!book.isPresent())
+            throw new BookNotFoundException("The given book is not present in the library");
 
+        return book.get();
+    }
+
+    @GetMapping("/checkIssueStatus/{bookId}")
+    public boolean getIssueStatus(@PathVariable Integer bookId){
+        Optional<Book> book = bookRepo.findById(bookId);
+        if(book.isPresent())
+        {
+            return book.get().getIssueStatus();
+        }
+        return false;
+    }
+
+    @GetMapping("/checkShelf/{bookId}")
+    public String getShelfDetailsFromBookId(@PathVariable Integer bookId){
+        Optional<Book> book = bookRepo.findById(bookId);
+        if(book.isPresent()){
+            return book.get().getShelfNumber();
+        }
         return null;
     }
 

@@ -29,6 +29,13 @@ public class User {
     public User() {
     }
 
+    /**
+     *
+     *
+     * @param userId
+     * @param name
+     * @param phnNo
+     */
     public User(Integer userId, String name, String phnNo) {
         this.userId = userId;
         this.name = name;

@@ -72,7 +72,7 @@ public class Book {
         this.shelfNumber = shelfNumber;
     }
 
-    public boolean isIssueStatus() {
+    public boolean getIssueStatus() {
         return issueStatus;
     }
 

@@ -1,5 +1,6 @@
 package com.library.sroy.LibraryProject.controller;
 
+import com.library.sroy.LibraryProject.exception.UserNotFoundException;
 import com.library.sroy.LibraryProject.model.User;
 import com.library.sroy.LibraryProject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,9 @@ public class UserController {
     @GetMapping("/{userId}")
     public User getUserDetailsFromId(@PathVariable Integer userId){
            Optional<User> user = userRepo.findById(userId);
-           if(user.isPresent())
-               return user.get();
-           return null;
+           if(!user.isPresent())
+               throw new UserNotFoundException("User Not Found");
+           return user.get();
     }
 
 
