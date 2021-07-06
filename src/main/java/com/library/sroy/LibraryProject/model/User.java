@@ -2,10 +2,7 @@ package com.library.sroy.LibraryProject.model;
 
 import com.sun.istack.NotNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /*
 * This is the user of the library
@@ -14,17 +11,21 @@ import javax.persistence.Id;
 * Name
 * Phone Number
 * */
-
+@SequenceGenerator(name="seq", initialValue = 5)
 @Entity
 public class User {
 
     @Id
     @NotNull
-    @GeneratedValue
+    @GeneratedValue(generator = "seq")
     private Integer userId;
 
     private String name;
     private String phnNo;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="card_id", referencedColumnName = "cardId")
+    private LibraryCard card;
 
     public User() {
     }
@@ -36,10 +37,11 @@ public class User {
      * @param name
      * @param phnNo
      */
-    public User(Integer userId, String name, String phnNo) {
+    public User(Integer userId, String name, String phnNo,LibraryCard card) {
         this.userId = userId;
         this.name = name;
         this.phnNo = phnNo;
+        this.card = null;
     }
 
     public Integer getUserId() {
@@ -66,12 +68,22 @@ public class User {
         this.phnNo = phnNo;
     }
 
+    public LibraryCard getCard() {
+        return card;
+    }
+
+    public void setCard(LibraryCard card) {
+        this.card = card;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "userId=" + userId +
                 ", name='" + name + '\'' +
                 ", phnNo='" + phnNo + '\'' +
+                ", card=" + card +
                 '}';
     }
 }
+

@@ -8,6 +8,12 @@ public class ErrorResponse {
     private String message;
     private String details;
 
+    /***
+     *
+     * @param timeStamp
+     * @param message
+     * @param details
+     */
     public ErrorResponse(Date timeStamp, String message, String details) {
         this.timeStamp = timeStamp;
         this.message = message;

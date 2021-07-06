@@ -28,8 +28,18 @@ public class Book {
     private boolean issueStatus;
 
 
+
     public Book() {
     }
+
+    /***
+     *
+     * @param bookId
+     * @param bookName
+     * @param bookAuthor
+     * @param shelfNumber
+     * @param issueStatus
+     */
 
     public Book(Integer bookId, String bookName, String bookAuthor, String shelfNumber, boolean issueStatus) {
         this.bookId = bookId;
@@ -39,6 +49,7 @@ public class Book {
         this.issueStatus = issueStatus;
 
     }
+
 
     public Integer getBookId() {
         return bookId;

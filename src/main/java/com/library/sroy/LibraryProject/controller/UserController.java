@@ -1,31 +1,48 @@
 package com.library.sroy.LibraryProject.controller;
 
-import com.library.sroy.LibraryProject.exception.UserNotFoundException;
 import com.library.sroy.LibraryProject.model.User;
-import com.library.sroy.LibraryProject.repository.UserRepository;
+import com.library.sroy.LibraryProject.service.LibraryCardService;
+import com.library.sroy.LibraryProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/library/user")
+@RequestMapping("/library")
 public class UserController {
 
     @Autowired
-    UserRepository userRepo;
+    UserService userService;
 
-    @GetMapping("/{userId}")
+    @Autowired
+    LibraryCardService libraryCardService;
+
+
+    @GetMapping("/user/{userId}")
     public User getUserDetailsFromId(@PathVariable Integer userId){
-           Optional<User> user = userRepo.findById(userId);
-           if(!user.isPresent())
-               throw new UserNotFoundException("User Not Found");
-           return user.get();
+        return userService.getUserDetails(userId);
     }
 
+    @PostMapping("/addUser")
+    public ResponseEntity addUserDetails(@RequestBody User user){
 
+        User savedUser = userService.addANewUser(user);
+        URI location = ServletUriComponentsBuilder
+                        .fromCurrentRequest()
+                        .path("/id")
+                        .buildAndExpand(savedUser.getUserId()).toUri();
+        return ResponseEntity.created(location).build();
+    }
+
+    @GetMapping("/issueACard/{userId}")
+    public String issueACardFortheUser(@PathVariable Integer userId){
+        return "The card of id="+libraryCardService.issueANewCard(userId)+" has been successfully issued";
+
+    }
 }

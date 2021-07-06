@@ -13,15 +13,39 @@ import java.util.Date;
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
+    /***
+     *
+     * @param userEx
+     * @param req
+     * @return
+     */
     @ExceptionHandler(UserNotFoundException.class)
     public final ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException userEx, WebRequest req){
         ErrorResponse errorResponse = new ErrorResponse(new Date(), userEx.getMessage(), req.getDescription(false));
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
+    /***
+     *
+     * @param bookEx
+     * @param req
+     * @return
+     */
     @ExceptionHandler(BookNotFoundException.class)
     public final ResponseEntity<Object> handleBookNotFoundException(BookNotFoundException bookEx, WebRequest req){
         ErrorResponse errorResponse = new ErrorResponse(new Date(), bookEx.getMessage(), req.getDescription(false));
         return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(LibraryCardNotFoundException.class)
+    public final ResponseEntity<Object> handleLibraryCardNotFoundException(LibraryCardNotFoundException libCardEx, WebRequest req){
+        ErrorResponse errorResponse = new ErrorResponse(new Date(), libCardEx.getMessage(), req.getDescription(false));
+        return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CardAlreadyPresentException.class)
+    public final ResponseEntity<Object> handleCardAlreadyPresentException(CardAlreadyPresentException cardpresentEx, WebRequest req){
+        ErrorResponse errorResponse = new ErrorResponse(new Date(), cardpresentEx.getMessage(),req.getDescription(false));
+        return new ResponseEntity<>(errorResponse,HttpStatus.NOT_ACCEPTABLE);
     }
 }
