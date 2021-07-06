@@ -2,9 +2,7 @@ package com.library.sroy.LibraryProject.model;
 
 import com.sun.istack.NotNull;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 /*
@@ -14,11 +12,13 @@ import java.util.Date;
 * ShelfNumber
 *
 * */
+@SequenceGenerator(name = "bookSeq",initialValue = 6)
 @Entity
 public class Book {
 
     @Id
     @NotNull
+    @GeneratedValue(generator = "bookSeq")
     private Integer bookId;
 
     private String bookName;

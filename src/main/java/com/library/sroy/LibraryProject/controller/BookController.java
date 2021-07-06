@@ -3,11 +3,9 @@ package com.library.sroy.LibraryProject.controller;
 import com.library.sroy.LibraryProject.model.Book;
 import com.library.sroy.LibraryProject.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -23,6 +21,12 @@ public class BookController {
         return bookService.getBookDetails(bookId);
     }
 
+    @GetMapping("/allBooks")
+    public List<Book> getAllTheBooks()
+    {
+        return bookService.getAllTheBooks();
+    }
+
     @GetMapping("/checkIssueStatus/{bookId}")
     public boolean getIssueStatus(@PathVariable Integer bookId){
         return bookService.getIssueStatusOfBook(bookId);
@@ -34,5 +38,8 @@ public class BookController {
         return bookService.getShelfDetailsFromBookId(bookId);
     }
 
-
+    @PostMapping("/addABook")
+    public String addANewBook(@RequestBody Book book){
+        return "The book has been added at bookId = "+bookService.addABook(book);
+    }
 }
