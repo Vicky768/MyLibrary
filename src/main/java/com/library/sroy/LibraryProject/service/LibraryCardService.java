@@ -48,6 +48,6 @@ public class LibraryCardService {
         user.setCard(newLibraryCard);
         userRepository.save(user);
 
-        return user.getCard().getCardId();
+        return user.getUserId();
     }
 }

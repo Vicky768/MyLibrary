@@ -1,8 +1,7 @@
 package com.library.sroy.LibraryProject.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 
 @SequenceGenerator(name="cardseq", initialValue = 100)
 @Entity
@@ -15,18 +14,18 @@ public class LibraryCard {
     @OneToOne
     private Book issuedBook;
 
-    private Date issueDate;
-    private Date expecTedReturn;
+    private LocalDate issueDate;
+    private LocalDate expectedReturn;
 
     private boolean defaulter;
 
     public LibraryCard(){}
 
-    public LibraryCard(Integer cardId, Book issuedBook, Date issueDate, Date expecTedReturn, boolean defaulter) {
+    public LibraryCard(Integer cardId, Book issuedBook, LocalDate issueDate, LocalDate expecTedReturn, boolean defaulter) {
         this.cardId = cardId;
         this.issuedBook = issuedBook;
         this.issueDate = issueDate;
-        this.expecTedReturn = expecTedReturn;
+        this.expectedReturn = expecTedReturn;
         this.defaulter = defaulter;
     }
 
@@ -38,28 +37,28 @@ public class LibraryCard {
         this.cardId = cardId;
     }
 
-    public Book getIssuedBookId() {
+    public Book getIssuedBook() {
         return issuedBook;
     }
 
-    public void setIssuedBookId(Book issuedBookId) {
-        this.issuedBook = issuedBookId;
+    public void setIssuedBook(Book issuedBook) {
+        this.issuedBook = issuedBook;
     }
 
-    public Date getIssueDate() {
+    public LocalDate getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(Date issueDate) {
+    public void setIssueDate(LocalDate issueDate) {
         this.issueDate = issueDate;
     }
 
-    public Date getExpecTedReturn() {
-        return expecTedReturn;
+    public LocalDate getExpecTedReturn() {
+        return expectedReturn;
     }
 
-    public void setExpecTedReturn(Date expecTedReturn) {
-        this.expecTedReturn = expecTedReturn;
+    public void setExpecTedReturn(LocalDate expecTedReturn) {
+        this.expectedReturn = expecTedReturn;
     }
 
     public boolean isDefaulter() {
@@ -68,5 +67,11 @@ public class LibraryCard {
 
     public void setDefaulter(boolean defaulter) {
         this.defaulter = defaulter;
+    }
+
+    public boolean hasBookIssued(){
+        if(this.issuedBook!=null)
+            return true;
+        return false;
     }
 }

@@ -48,4 +48,10 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(new Date(), cardpresentEx.getMessage(),req.getDescription(false));
         return new ResponseEntity<>(errorResponse,HttpStatus.NOT_ACCEPTABLE);
     }
+
+    @ExceptionHandler(BookAlreadyBeenIssuedException.class)
+    public final ResponseEntity<Object> handleBookhasAlreadyBeenIssued(BookAlreadyBeenIssuedException bookAlreadyEx, WebRequest webReq){
+        ErrorResponse errorResponse = new ErrorResponse(new Date(), bookAlreadyEx.getMessage(),webReq.getDescription(false));
+        return new ResponseEntity<>(errorResponse,HttpStatus.NOT_ACCEPTABLE);
+    }
 }

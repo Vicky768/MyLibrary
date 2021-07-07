@@ -1,17 +1,15 @@
 package com.library.sroy.LibraryProject.controller;
 
 import com.library.sroy.LibraryProject.model.User;
+import com.library.sroy.LibraryProject.service.IssueService;
 import com.library.sroy.LibraryProject.service.LibraryCardService;
 import com.library.sroy.LibraryProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/library")
@@ -22,6 +20,9 @@ public class UserController {
 
     @Autowired
     LibraryCardService libraryCardService;
+
+    @Autowired
+    IssueService issueService;
 
 
     @GetMapping("/user/{userId}")
@@ -41,8 +42,12 @@ public class UserController {
     }
 
     @GetMapping("/issueACard/{userId}")
-    public String issueACardFortheUser(@PathVariable Integer userId){
-        return "The card of id="+libraryCardService.issueANewCard(userId)+" has been successfully issued";
+    public User issueACardFortheUser(@PathVariable Integer userId){
+       return getUserDetailsFromId(libraryCardService.issueANewCard(userId));
+    }
 
+    @GetMapping("/calculateFine/{userId}")
+    public Double calculateTheFine(@PathVariable Integer userId){
+        return issueService.calculateFineRate(userId);
     }
 }
